@@ -2,9 +2,9 @@
 
 ### Clone the repositary
 
-```git
+```
 
-git clone <repo>
+git clone https://github.com/abhishek-sanwal/Web_Based_Scrapper.git
 
 ```
 

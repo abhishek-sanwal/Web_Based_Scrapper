@@ -5,9 +5,10 @@ from django.http import HttpRequest, HttpResponse
 from typing import List
 from bs4 import BeautifulSoup
 import requests
+from .forms import UrlForm
 
 
-def getlink(request: HttpRequest) -> HttpResponse:
+def getlink(request) -> HttpResponse:
     '''
 
     This function represents a get and post view
@@ -15,15 +16,15 @@ def getlink(request: HttpRequest) -> HttpResponse:
     than it will list all urls and name in same webpage.s
 
     '''
-    form = request.POST or None
+    form = UrlForm(request.POST or None)
 
     if form.is_valid():
 
-        url = form.cleansed_fields("url")
-        messages.success(f"Your url has been received.{url}")
+        url = form.cleaned_data["url"]
+        # messages.success(message, f"Your url has been received.{url}")
         form.save()
         links = extract_links(url)
-        return render(request, template_name="Urls.html", context={
+        return render(request, template_name="urls.html", context={
             "links": links
         })
 
@@ -54,5 +55,5 @@ def extract_links(url: str) -> List[List[str]]:
         val = link.get('href')
         # Add val and val.text to list
         ret.append([val, link.text.strip()])
-
+    print(ret)
     return ret

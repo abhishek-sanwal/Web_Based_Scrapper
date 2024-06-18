@@ -6,9 +6,16 @@
     <title>Document</title>
   </head>
   <body>
+    {% if not links %}
     <form method="post">
-      {{ csrf_token }} {{ form }}
+      {% csrf_token %} {{ form }}
       <button type="submit">Fetch Urls</button>
+      {% else %} {% for link,val in links %}
+      <h4>{{ link }}</h4>
+      <br />
+      <h5>{{ val }}</h5>
+      <hr />
+      {% endfor %} {% endif %}
     </form>
   </body>
 </html>
